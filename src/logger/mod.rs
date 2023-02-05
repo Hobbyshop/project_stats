@@ -15,7 +15,7 @@ impl core::fmt::Display for LogLevel {
 
 }
 
-pub fn log(message: &str, level: LogLevel) {
+pub fn log(message: String, level: LogLevel) {
     let time = chrono::offset::Local::now();
     println!("[{}] [{}] - {}", time.format("%Y-%m-%d %H:%M:%S"), level.to_string().to_uppercase(), message);
 }

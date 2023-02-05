@@ -1,11 +1,13 @@
 mod logger;
 mod mapper;
 
+use logger::LogLevel;
 use std::{fs::{self, ReadDir, DirEntry}};
 
 fn main() {
     let args = &std::env::args().collect::<Vec<String>>();
     if args.len() == 1 {
+        logger::log("Please provide a directory as program argument!".to_string(), LogLevel::Fatal);
         return;
     }
 
