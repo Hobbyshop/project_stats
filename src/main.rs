@@ -1,12 +1,16 @@
+mod logger;
+mod mapper;
+
 use std::{fs::{self, ReadDir, DirEntry}};
 
 fn main() {
-    let target_dir = &std::env::args().collect::<Vec<String>>()[1];
-    let path = fs::read_dir(target_dir).unwrap();
-
-    for p in read_dir(path) {
-        println!("{}", p.path().display());
+    let args = &std::env::args().collect::<Vec<String>>();
+    if args.len() == 1 {
+        return;
     }
+
+    let path = fs::read_dir(&args[1]).unwrap();
+    mapper::map_languages(read_dir(path));
 }
 
 fn read_dir(dir: ReadDir) -> Vec<DirEntry> {
