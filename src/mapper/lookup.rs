@@ -16,6 +16,11 @@ lazy_static::lazy_static! {
         m.insert("py", "Python");
         m.insert("lua", "Lua");
         m.insert("kt", "Kotlin");
+        m.insert("go", "Go");
+        m.insert("scala", "Scala");
+        m.insert("php", "PHP");
+        m.insert("swift", "Swift");
+
         m
     };
 }
