@@ -4,7 +4,7 @@ use std::fs::DirEntry;
 
 use crate::logger::{self, LogLevel};
 
-pub fn map_languages(files: Vec<DirEntry>) -> Vec<String> {
+pub fn map_languages(files: &Vec<DirEntry>) -> Vec<String> {
     let mut file_langs = Vec::<String>::new();
 
     for file in files {
@@ -19,7 +19,7 @@ pub fn map_languages(files: Vec<DirEntry>) -> Vec<String> {
         logger::log(format!("Registered file: \"{}\"", file.path().display()), LogLevel::Info);
     }
 
-    logger::log(format!("Found {} valid files", file_langs.len()), LogLevel::Important);
+    logger::log(format!("Found {} valid files\n", file_langs.len()), LogLevel::Important);
     file_langs
 }
 

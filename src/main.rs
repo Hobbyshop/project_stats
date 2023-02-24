@@ -1,8 +1,9 @@
 mod logger;
 mod mapper;
+mod chunking;
 
 use logger::LogLevel;
-use std::{fs::{self, ReadDir, DirEntry}};
+use std::fs::{self, ReadDir, DirEntry};
 
 fn main() {
     let args = &std::env::args().collect::<Vec<String>>();
@@ -11,8 +12,14 @@ fn main() {
         return;
     }
 
-    let path = fs::read_dir(&args[1]).unwrap();
-    mapper::map_languages(read_dir(path));
+    let files = read_dir(fs::read_dir(&args[1]).unwrap());
+    let langs = mapper::map_languages(&files);
+
+    // count chunks of each language's code
+    // one chunk = 100 characters
+    let chunks = chunking::get_chunks(langs, files);
+
+    println!("{:?}", chunks);
 }
 
 fn read_dir(dir: ReadDir) -> Vec<DirEntry> {
