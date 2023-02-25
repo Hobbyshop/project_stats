@@ -13,11 +13,7 @@ fn main() {
     }
 
     let files = read_dir(fs::read_dir(&args[1]).unwrap());
-    let langs = mapper::map_languages(&files);
-
-    // count chunks of each language's code
-    // one chunk = 100 characters
-    let chunks = chunking::get_chunks(langs, files);
+    let chunks = chunking::get_chunks(files);
 
     println!("{:?}", chunks);
 }
