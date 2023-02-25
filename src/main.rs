@@ -1,9 +1,10 @@
 mod logger;
 mod mapper;
 mod chunking;
+mod math;
 
 use logger::LogLevel;
-use std::fs::{self, ReadDir, DirEntry};
+use std::{fs::{self, ReadDir, DirEntry}, collections::HashMap};
 
 fn main() {
     let args = &std::env::args().collect::<Vec<String>>();
@@ -15,7 +16,8 @@ fn main() {
     let files = read_dir(fs::read_dir(&args[1]).unwrap());
     let chunks = chunking::get_chunks(files);
 
-    println!("{:?}", chunks);
+    let percentages = calc_percentages(&chunks);
+    print_summary(&percentages);
 }
 
 fn read_dir(dir: ReadDir) -> Vec<DirEntry> {
@@ -34,3 +36,21 @@ fn read_dir(dir: ReadDir) -> Vec<DirEntry> {
 
     files
 }
+
+fn calc_percentages(chunks: &HashMap<String, u64>) -> HashMap<String, f32> {
+    let chunk_vec: Vec<u64> = chunks.values().cloned().collect();
+    let chunk_sum = math::get_sum(&chunk_vec);
+
+    let mut map = HashMap::<String, f32>::new();
+
+    for lang in chunks {
+        let percent = math::get_percent(&chunk_sum, lang.1);
+        map.insert(lang.0.to_string(), percent * 100.0);
+    }
+
+    map
+}
+
+fn print_summary(data: &HashMap<String, f32>) {
+
+} 

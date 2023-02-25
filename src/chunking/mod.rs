@@ -8,7 +8,7 @@ use crate::mapper;
 pub fn get_chunks(files: Vec<DirEntry>) -> HashMap<String, u64> {
     let mut chunk_map = HashMap::<String, u64>::new();
 
-    for file in files {
+    for file in &files {
         let lang_name = mapper::map_file_to_lang(&file);
         if lang_name.is_empty() {
             continue;
@@ -28,6 +28,8 @@ pub fn get_chunks(files: Vec<DirEntry>) -> HashMap<String, u64> {
         chunk_map.insert(lang_name, chunks.round() as u64);
     }
 
+    logger::log(format!("{} valid files were found", files.len()), LogLevel::Important);
+    logger::log(format!("{} languages were detected", chunk_map.len()), LogLevel::Important);
     chunk_map
 }
 
