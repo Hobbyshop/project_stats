@@ -52,5 +52,11 @@ fn calc_percentages(chunks: &HashMap<String, u64>) -> HashMap<String, f32> {
 }
 
 fn print_summary(data: &HashMap<String, f32>) {
+    println!("\n====== SUMMARY ======");
 
+    for info in data {
+        println!("{}: {:.2}%", info.0, info.1);
+    }
+
+    println!("=====================");
 } 
